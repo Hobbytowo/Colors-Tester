@@ -19,10 +19,56 @@ class App extends Component {
 
         <main className="main">
           <article className="main__article article article--text">
-            <form className="article__form form">
-              <label className="form__label" htmlFor="textColorInput">Text:</label>
+          <form className="article__form form">
+            <div className="form__color">
+              <label className="form__label" htmlFor="textColorInput">
+                Text color:
+              </label>
               <input className="form__input" id="textColorInput" type="text" placeholder="#333"/>
-            </form>
+            </div>
+            <div className="form__ranges">
+              <div className="from__item">
+                <label className="form__label" htmlFor="hueText">Hue { this.state.hueText }&#176;</label>
+                <input
+                  type="range"
+                  id="hueText"
+                  className="form__input input input--range"
+                  name="hueText"
+                  min="0"
+                  max="360"
+                  value="11"
+                  step="1"
+                />
+              </div>
+              <div className="from__item">
+                <label className="form__label" htmlFor="satText">Saturation { this.state.satText }</label>
+                <input
+                  type="range"
+                  id="satText"
+                  className="form__input input input--range"
+                  name="satText"
+                  min="0"
+                  max="1"
+                  value="0.21"
+                  step="0.01"
+                />
+              </div>
+              <div className="from__item">
+                <label className="form__label" htmlFor="ligText">Lightness { this.state.ligText }</label>
+                <input
+                  type="range"
+                  id="ligText"
+                  className="form__input input input--range"
+                  name="ligText"
+                  min="0"
+                  max="1"
+                  value="0.2"
+                  step="0.01"
+                />
+              </div>
+            </div>
+          </form>
+
           </article>
 
           <div className="main__ratio">
@@ -31,8 +77,53 @@ class App extends Component {
 
           <article className="main__article article article--background">
             <form className="article__form form">
-              <label className="form__label" htmlFor="backgroundColorInput">Background:</label>
-              <input className="form__input" id="backgroundColorInput" type="text" placeholder="#333"/>
+              <div className="form__color">
+                <label className="form__label" htmlFor="backgroundColorInput">
+                  Background:
+                </label>
+                <input className="form__input" id="backgroundColorInput" type="text" placeholder="#333"/>
+              </div>
+              <div className="form__ranges">
+                <div className="from__item">
+                  <label className="form__label" htmlFor="hueBcg">Hue { this.state.hueBcg }&#176;</label>
+                  <input
+                    type="range"
+                    id="hueBcg"
+                    className="form__input input input--range"
+                    name="hueBcg"
+                    min="0"
+                    max="360"
+                    value="11"
+                    step="1"
+                  />
+                </div>
+                <div className="from__item">
+                  <label className="form__label" htmlFor="satBcg">Saturation { this.state.satBcg }</label>
+                  <input
+                    type="range"
+                    id="satBcg"
+                    className="form__input input input--range"
+                    name="satBcg"
+                    min="0"
+                    max="1"
+                    value="0.21"
+                    step="0.01"
+                  />
+                </div>
+                <div className="from__item">
+                  <label className="form__label" htmlFor="ligBcg">Lightness { this.state.ligBcg }</label>
+                  <input
+                    type="range"
+                    id="ligBcg"
+                    className="form__input input input--range"
+                    name="ligBcg"
+                    min="0"
+                    max="1"
+                    value="0.2"
+                    step="0.01"
+                  />
+                </div>
+              </div>
             </form>
           </article>
         </main>
