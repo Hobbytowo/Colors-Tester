@@ -1,12 +1,30 @@
 import React, { Component } from 'react';
 import './App.css';
+import Color from './color'
 
 class App extends Component {
   state = {
     ratio: 0
   }
 
-  colorChange = () => {
+  getContrastRatio = (color1, color2) => {
+    const getLuminance = color => {
+      //  L = 0.2126 * R + 0.7152 * G + 0.0722 * B
+
+    }
+
+    const l1 = getLuminance(color1)
+    const l2 = getLuminance(color1)
+
+    const ratio = Math.round(Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05)
+
+    this.setState({
+      ratio
+    })
+    return ratio
+  }
+
+  onColorChange = () => {
     console.log(this.state)
   }
 
@@ -18,114 +36,23 @@ class App extends Component {
         </header>
 
         <main className="main">
-          <article className="main__article article article--text">
-          <form className="article__form form">
-            <div className="form__color">
-              <label className="form__label" htmlFor="textColorInput">
-                Text color:
-              </label>
-              <input className="form__input" id="textColorInput" type="text" placeholder="#333"/>
-            </div>
-            <div className="form__ranges">
-              <div className="from__item">
-                <label className="form__label" htmlFor="hueText">Hue { this.state.hueText }&#176;</label>
-                <input
-                  type="range"
-                  id="hueText"
-                  className="form__input input input--range"
-                  name="hueText"
-                  min="0"
-                  max="360"
-                  value="11"
-                  step="1"
-                />
-              </div>
-              <div className="from__item">
-                <label className="form__label" htmlFor="satText">Saturation { this.state.satText }</label>
-                <input
-                  type="range"
-                  id="satText"
-                  className="form__input input input--range"
-                  name="satText"
-                  min="0"
-                  max="1"
-                  value="0.21"
-                  step="0.01"
-                />
-              </div>
-              <div className="from__item">
-                <label className="form__label" htmlFor="ligText">Lightness { this.state.ligText }</label>
-                <input
-                  type="range"
-                  id="ligText"
-                  className="form__input input input--range"
-                  name="ligText"
-                  min="0"
-                  max="1"
-                  value="0.2"
-                  step="0.01"
-                />
-              </div>
-            </div>
-          </form>
-
-          </article>
+          <Color
+            name="text"
+            hue="120"
+            saturation="0.5"
+            lightness="0.25"
+          />
 
           <div className="main__ratio">
             { this.state.ratio }
           </div>
 
-          <article className="main__article article article--background">
-            <form className="article__form form">
-              <div className="form__color">
-                <label className="form__label" htmlFor="backgroundColorInput">
-                  Background:
-                </label>
-                <input className="form__input" id="backgroundColorInput" type="text" placeholder="#333"/>
-              </div>
-              <div className="form__ranges">
-                <div className="from__item">
-                  <label className="form__label" htmlFor="hueBcg">Hue { this.state.hueBcg }&#176;</label>
-                  <input
-                    type="range"
-                    id="hueBcg"
-                    className="form__input input input--range"
-                    name="hueBcg"
-                    min="0"
-                    max="360"
-                    value="11"
-                    step="1"
-                  />
-                </div>
-                <div className="from__item">
-                  <label className="form__label" htmlFor="satBcg">Saturation { this.state.satBcg }</label>
-                  <input
-                    type="range"
-                    id="satBcg"
-                    className="form__input input input--range"
-                    name="satBcg"
-                    min="0"
-                    max="1"
-                    value="0.21"
-                    step="0.01"
-                  />
-                </div>
-                <div className="from__item">
-                  <label className="form__label" htmlFor="ligBcg">Lightness { this.state.ligBcg }</label>
-                  <input
-                    type="range"
-                    id="ligBcg"
-                    className="form__input input input--range"
-                    name="ligBcg"
-                    min="0"
-                    max="1"
-                    value="0.2"
-                    step="0.01"
-                  />
-                </div>
-              </div>
-            </form>
-          </article>
+          <Color
+            name="background"
+            hue="150"
+            saturation="0.75"
+            lightness="0.12"
+          />
         </main>
 
         <section className="section section--description">
@@ -141,14 +68,12 @@ class App extends Component {
           <p>
             Accessibility
           </p>
-          <p>
           <ul>
             <li>Level AAA Large - ratio greater than 7</li>
             <li>Level AAA - ratio greater than 4.5</li>
             <li>Level AA Large - ratio greater than 4.5 (for normal sized text)</li>
             <li>Level AA - ratio greater than 3 (for bold text or text larger than 24px)</li>
           </ul>
-          </p>
         </section>
       </div>
     );
