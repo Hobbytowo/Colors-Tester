@@ -4,9 +4,22 @@ import Color from './color'
 
 class App extends Component {
   state = {
-    ratio: 0
+    ratio: 0,
+    textColor: {
+      name: 'text',
+      hue: 210,
+      saturation: 0.7,
+      lightness: 0.25
+    },
+    backgroundColor: {
+      name: 'background',
+      hue: 210,
+      saturation: 0.4,
+      lightness: 0.25
+    }
   }
 
+  // counting ratio
   getContrastRatio = (color1, color2) => {
     const getLuminance = color => {
       //  L = 0.2126 * R + 0.7152 * G + 0.0722 * B
@@ -24,8 +37,16 @@ class App extends Component {
     return ratio
   }
 
-  onColorChange = () => {
-    console.log(this.state)
+  // on change range event
+  onColorChange = color => {
+    const { name, valueName, value } = color
+
+    this.setState(prevState => ({
+      [`${ name }`]: {
+          ...prevState[`${ name }`],
+          [`${ valueName }`]: value
+        }
+    }))
   }
 
   render() {
@@ -36,23 +57,13 @@ class App extends Component {
         </header>
 
         <main className="main">
-          <Color
-            name="text"
-            hue="120"
-            saturation="0.5"
-            lightness="0.25"
-          />
+          <Color color={this.state.textColor} onColorChange={ this.onColorChange } />
 
           <div className="main__ratio">
             { this.state.ratio }
           </div>
 
-          <Color
-            name="background"
-            hue="150"
-            saturation="0.75"
-            lightness="0.12"
-          />
+          <Color color={this.state.backgroundColor} onColorChange={ this.onColorChange }/>
         </main>
 
         <section className="section section--description">

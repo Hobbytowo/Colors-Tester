@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 
 class Color extends Component {
 
-  onColorChange = () => {
+  onColorChange = e => {
+    const [ valueName, name ] = e.target.name.split('-')
+    const value = e.target.value * 1
+    this.props.onColorChange({name: name + 'Color', valueName: valueName, value: value})
   }
 
   render() {
-    const { name, hue, saturation, lightness } = this.props
+    const { color: { name, hue, saturation, lightness }} = this.props
 
     return (
       <article className={`main__article article article--${ name }`}>
@@ -21,9 +24,9 @@ class Color extends Component {
             <div className="from__item">
               <label className="form__label" htmlFor={ `hue${ name }`}>Hue { hue }&#176;</label>
               <input
-                onChange={ this.onColorChange.bind(this) }
+                onChange={ this.onColorChange }
                 type="range"
-                name={ `hue${ name }`}
+                name={ `hue-${ name }`}
                 id={ `hue${ name }`}
                 className="form__input input input--range"
                 min="0"
@@ -35,9 +38,9 @@ class Color extends Component {
             <div className="from__item">
               <label className="form__label" htmlFor={ `saturation${ name }`}>Saturation { saturation }</label>
               <input
-                onChange={ this.onColorChange.bind(this) }
+                onChange={ this.onColorChange }
                 type="range"
-                name={ `saturation$${ name }`}
+                name={ `saturation-${ name }`}
                 id={ `saturation$${ name }`}
                 className="form__input input input--range"
                 min="0"
@@ -49,9 +52,9 @@ class Color extends Component {
             <div className="from__item">
               <label className="form__label" htmlFor={ `lightness${ name }`}>Lightness { lightness }</label>
               <input
-                onChange={ this.onColorChange.bind(this) }
+                onChange={ this.onColorChange }
                 type="range"
-                name={ `lightness${ name }`}
+                name={ `lightness-${ name }`}
                 id={ `lightness${ name }`}
                 className="form__input input input--range"
                 min="0"
