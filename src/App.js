@@ -19,7 +19,7 @@ class App extends Component {
     }
   }
 
-  // counting ratio
+  // count ratio
   getContrastRatio = (color1, color2) => {
     const getLuminance = color => {
       //  L = 0.2126 * R + 0.7152 * G + 0.0722 * B
@@ -37,7 +37,7 @@ class App extends Component {
     return ratio
   }
 
-  // on change range event
+  // on change range event - data from Color component
   onColorChange = color => {
     const { name, valueName, value } = color
 
