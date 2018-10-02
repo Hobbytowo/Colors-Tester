@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 
 class Color extends Component {
+  state = {
+    hex: ''
+  }
 
-  // count hexa color from hsl
-  hslToHex = (h, s, l) => {
+  // get rgb color from hsl
+  hslToRgb = (h, s, l) => {
     h /= 360
     let r, g, b = 0
 
@@ -27,12 +30,13 @@ class Color extends Component {
       b = hue2rgb(p, q, h - 1/3)
     }
 
-    const rgbToHex = x => {
-      const hex = Math.round(x * 255).toString(16)
-      return hex.length === 1 ? '0' + hex : hex
-    }
+    return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)]
+  }
 
-    return `#${ rgbToHex(r) }${ rgbToHex(g) }${ rgbToHex(b) }`
+  // get hexa color from rgb
+  rgbToHex = x => {
+    const hex = x.toString(16)
+    return hex.length === 1 ? '0' + hex : hex
   }
 
   // on color change event
@@ -40,7 +44,27 @@ class Color extends Component {
     const [ valueName, name ] = e.target.name.split('-')
     const value = e.target.value * 1
 
-    this.props.onColorChange({ name: name + 'Color', valueName: valueName, value: value })
+    const { color: { hue, saturation, lightness }} = this.props
+    const [r, g, b] = this.hslToRgb(hue, saturation, lightness)
+
+    this.setState({
+      hex: `#${ this.rgbToHex(r) }${ this.rgbToHex(g) }${ this.rgbToHex(b) }`
+    })
+
+    this.props.onColorChange({
+      name: name + 'Color',
+      valueName: valueName,
+      value: value,
+      rgb: [r, g, b]
+      })
+  }
+
+  constructor(props) {
+    super(props)
+    const { color: { hue, saturation, lightness }} = props
+
+    const [ r, g, b ] = this.hslToRgb(hue, saturation, lightness)
+    this.state.hex = `#${ this.rgbToHex(r) }${ this.rgbToHex(g) }${ this.rgbToHex(b) }`
   }
 
   render() {
@@ -53,7 +77,11 @@ class Color extends Component {
             <label className="form__label" htmlFor={ `${ name }Color` }>
               { name } color:
             </label>
-            <input className="form__input" id={ `${ name }Color` } type="text" placeholder={ this.hslToHex(hue, saturation, lightness) }/>
+            <input
+              className="form__input"
+              id={ `${ name }Color` }
+              type="text"
+              placeholder={ this.state.hex }/>
           </div>
           <div className="form__ranges">
             <div className="from__item">

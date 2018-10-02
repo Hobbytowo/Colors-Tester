@@ -9,44 +9,44 @@ class App extends Component {
       name: 'text',
       hue: 210,
       saturation: 0.7,
-      lightness: 0.25
+      lightness: 0.25,
+      rgb: []
     },
     backgroundColor: {
       name: 'background',
       hue: 210,
       saturation: 0.4,
-      lightness: 0.25
+      lightness: 0.25,
+      rgb: []
     }
-  }
-
-  // count ratio
-  getContrastRatio = (color1, color2) => {
-    const getLuminance = color => {
-      //  L = 0.2126 * R + 0.7152 * G + 0.0722 * B
-
-    }
-
-    const l1 = getLuminance(color1)
-    const l2 = getLuminance(color1)
-
-    const ratio = Math.round(Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05)
-
-    this.setState({
-      ratio
-    })
-    return ratio
   }
 
   // on change range event - data from Color component
   onColorChange = color => {
-    const { name, valueName, value } = color
+    const { name, valueName, value, rgb } = color
 
     this.setState(prevState => ({
       [`${ name }`]: {
           ...prevState[`${ name }`],
-          [`${ valueName }`]: value
+          [`${ valueName }`]: value,
+          rgb
         }
     }))
+  }
+
+  // get costrast ratio value
+  getContrastRatio = () => {
+    // get luminance: L = 0.2126 * R + 0.7152 * G + 0.0722 * B
+    const getLuminance = color => {
+
+    }
+
+    const l1 = getLuminance(this.state.textColor.hex)
+    const l2 = getLuminance(this.state.backgroundColor.hex)
+
+    const ratio = Math.round(Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05)
+
+    return ratio
   }
 
   render() {
@@ -57,13 +57,13 @@ class App extends Component {
         </header>
 
         <main className="main">
-          <Color color={this.state.textColor} onColorChange={ this.onColorChange } />
+          <Color color={ this.state.textColor } onColorChange={ this.onColorChange } />
 
           <div className="main__ratio">
             { this.state.ratio }
           </div>
 
-          <Color color={this.state.backgroundColor} onColorChange={ this.onColorChange }/>
+          <Color color={ this.state.backgroundColor } onColorChange={ this.onColorChange }/>
         </main>
 
         <section className="section section--description">
