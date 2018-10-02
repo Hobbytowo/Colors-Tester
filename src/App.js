@@ -7,17 +7,17 @@ class App extends Component {
     ratio: 0,
     textColor: {
       name: 'text',
-      hue: 210,
-      saturation: 0.7,
-      lightness: 0.25,
-      rgb: []
+      hue: 116,
+      saturation: 0.44,
+      lightness: 0.16,
+      rgb: [25, 58, 23]
     },
     backgroundColor: {
       name: 'background',
-      hue: 210,
-      saturation: 0.4,
-      lightness: 0.25,
-      rgb: []
+      hue: 35,
+      saturation: 0.86,
+      lightness: 0.55,
+      rgb: [239, 154, 40]
     }
   }
 
@@ -32,21 +32,33 @@ class App extends Component {
           rgb
         }
     }))
+
+    this.getContrastRatio()
   }
 
   // get costrast ratio value
   getContrastRatio = () => {
-    // get luminance: L = 0.2126 * R + 0.7152 * G + 0.0722 * B
+    // get luminance value
     const getLuminance = color => {
+      const getSRGB = decColor => decColor/255
 
+      const sRGBArr = color.map(col => getSRGB(col))
+      const [ R, G, B ] = sRGBArr.map(col => {
+        return (col <= 0.03928) ? col/12.92 : Math.pow(((col + 0.055)/1.055), 2.4)
+      })
+
+      return (0.2126 * R + 0.7152 * G + 0.0722 * B)
     }
 
-    const l1 = getLuminance(this.state.textColor.hex)
-    const l2 = getLuminance(this.state.backgroundColor.hex)
+    const l1 = getLuminance(this.state.textColor.rgb)
+    const l2 = getLuminance(this.state.backgroundColor.rgb)
 
-    const ratio = Math.round(Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05)
+    const ratio = Math.round((Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05) * 100) / 100
+    console.log(ratio)
 
-    return ratio
+    this.setState({
+      ratio
+    })
   }
 
   render() {

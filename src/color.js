@@ -59,6 +59,7 @@ class Color extends Component {
       })
   }
 
+  // get initial hexa values
   constructor(props) {
     super(props)
     const { color: { hue, saturation, lightness }} = props
