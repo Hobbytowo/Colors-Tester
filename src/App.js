@@ -30,6 +30,19 @@ class App extends Component {
           rgb
         }
     }))
+
+    this.updateStyle(name, rgb)
+  }
+
+  updateStyle = (name, rgb) => {
+    const body = document.querySelector('body')
+    const color = `rgb(${ rgb.join(',') })`
+
+    name === 'textColor' ? (
+      body.style.color = color
+    ) : (
+      body.style.background = color
+    )
   }
 
   getContrastRatio = () => {
