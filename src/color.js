@@ -59,13 +59,23 @@ class Color extends Component {
       })
   }
 
-  // get initial hexa values
+  // get initial values
   constructor(props) {
     super(props)
-    const { color: { hue, saturation, lightness }} = props
+    const { color: { name, hue, saturation, lightness }} = props
 
     const [ r, g, b ] = this.hslToRgb(hue, saturation, lightness)
+
+    // get initial hexa values
     this.state.hex = `#${ this.rgbToHex(r) }${ this.rgbToHex(g) }${ this.rgbToHex(b) }`
+
+    // send initial rgb value to App component
+    this.props.onColorChange({
+      name: name + 'Color',
+      valueName: 'hue',
+      value: hue,
+      rgb: [r, g, b]
+    })
   }
 
   render() {

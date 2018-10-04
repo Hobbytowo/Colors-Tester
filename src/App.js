@@ -4,24 +4,22 @@ import Color from './color'
 
 class App extends Component {
   state = {
-    ratio: 0,
     textColor: {
       name: 'text',
       hue: 116,
       saturation: 0.44,
-      lightness: 0.16,
-      rgb: [25, 58, 23]
+      lightness: 0.16
     },
     backgroundColor: {
       name: 'background',
       hue: 35,
       saturation: 0.86,
-      lightness: 0.55,
-      rgb: [239, 154, 40]
+      lightness: 0.55
     }
   }
 
-  // on change range event - data from Color component
+  // on change range event (and constructor - init rgb value)
+  // data from Color component
   onColorChange = color => {
     const { name, valueName, value, rgb } = color
 
@@ -32,33 +30,34 @@ class App extends Component {
           rgb
         }
     }))
-
-    this.getContrastRatio()
   }
 
-  // get costrast ratio value
   getContrastRatio = () => {
+    const textRGB = this.state.textColor.rgb
+    const bcgRGB = this.state.backgroundColor.rgb
+
+    if (textRGB === undefined || bcgRGB === undefined) {
+      return
+    }
+
     // get luminance value
     const getLuminance = color => {
-      const getSRGB = decColor => decColor/255
+      const getSRGB = decColor => decColor / 255
 
       const sRGBArr = color.map(col => getSRGB(col))
       const [ R, G, B ] = sRGBArr.map(col => {
-        return (col <= 0.03928) ? col/12.92 : Math.pow(((col + 0.055)/1.055), 2.4)
+        return (col <= 0.03928) ? col / 12.92 : Math.pow(((col + 0.055) / 1.055), 2.4)
       })
 
       return (0.2126 * R + 0.7152 * G + 0.0722 * B)
     }
 
-    const l1 = getLuminance(this.state.textColor.rgb)
-    const l2 = getLuminance(this.state.backgroundColor.rgb)
+    const l1 = getLuminance(textRGB)
+    const l2 = getLuminance(bcgRGB)
 
     const ratio = Math.round((Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05) * 100) / 100
-    console.log(ratio)
 
-    this.setState({
-      ratio
-    })
+    return ratio
   }
 
   render() {
@@ -72,7 +71,7 @@ class App extends Component {
           <Color color={ this.state.textColor } onColorChange={ this.onColorChange } />
 
           <div className="main__ratio">
-            { this.state.ratio }
+            { this.getContrastRatio() }
           </div>
 
           <Color color={ this.state.backgroundColor } onColorChange={ this.onColorChange }/>
