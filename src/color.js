@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './color.css';
 
 class Color extends Component {
   state = {
@@ -95,13 +96,13 @@ class Color extends Component {
               placeholder={ this.state.hex }/>
           </div>
           <div className="form__ranges">
-            <div className="from__item">
+            <div className="form__item">
               <label className="form__label" htmlFor={ `hue${ name }`}>Hue { hue }&#176;</label>
               <input
                 onChange={ this.onColorChange }
                 type="range"
-                name={ `hue-${ name }`}
-                id={ `hue${ name }`}
+                name={ `hue-${ name }` }
+                id={ `hue${ name }` }
                 className="form__input input input--range"
                 min="0"
                 max="360"
@@ -109,13 +110,13 @@ class Color extends Component {
                 step="1"
               />
             </div>
-            <div className="from__item">
+            <div className="form__item">
               <label className="form__label" htmlFor={ `saturation${ name }`}>Saturation { saturation }</label>
               <input
                 onChange={ this.onColorChange }
                 type="range"
-                name={ `saturation-${ name }`}
-                id={ `saturation$${ name }`}
+                name={ `saturation-${ name }` }
+                id={ `saturation$${ name }` }
                 className="form__input input input--range"
                 min="0"
                 max="1"
@@ -123,13 +124,13 @@ class Color extends Component {
                 step="0.01"
               />
             </div>
-            <div className="from__item">
+            <div className="form__item">
               <label className="form__label" htmlFor={ `lightness${ name }`}>Lightness { lightness }</label>
               <input
                 onChange={ this.onColorChange }
                 type="range"
-                name={ `lightness-${ name }`}
-                id={ `lightness${ name }`}
+                name={ `lightness-${ name }` }
+                id={ `lightness${ name }` }
                 className="form__input input input--range"
                 min="0"
                 max="1"

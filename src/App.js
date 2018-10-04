@@ -36,12 +36,15 @@ class App extends Component {
 
   updateStyle = (name, rgb) => {
     const body = document.querySelector('body')
+    //const ratio = document.querySelector('.ratio')
+
     const color = `rgb(${ rgb.join(',') })`
 
     name === 'textColor' ? (
       body.style.color = color
     ) : (
       body.style.background = color
+    //  ratio !== null && ( ratio.style.color = color)
     )
   }
 
@@ -83,7 +86,7 @@ class App extends Component {
         <main className="main">
           <Color color={ this.state.textColor } onColorChange={ this.onColorChange } />
 
-          <div className="main__ratio">
+          <div className="main__ratio ratio">
             { this.getContrastRatio() }
           </div>
 
