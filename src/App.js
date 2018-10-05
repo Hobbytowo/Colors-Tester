@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.scss';
 import Color from './color'
+import { getContrastRatio } from './colorHelpers'
 
 class App extends Component {
   state = {
@@ -24,9 +25,9 @@ class App extends Component {
     const { name, valueName, value, rgb } = color
 
     this.setState(prevState => ({
-      [`${ name }`]: {
-          ...prevState[`${ name }`],
-          [`${ valueName }`]: value,
+      [name]: {
+          ...prevState[name],
+          [valueName]: value,
           rgb
         }
     }))
@@ -37,7 +38,7 @@ class App extends Component {
   updateStyle = (name, rgb) => {
     const body = document.querySelector('body')
     const ratio = document.querySelector('.ratio')
-console.log(ratio)
+    console.log(ratio !== null)
     const color = `rgb(${ rgb.join(',') })`
 
     name === 'textColor' ? (
@@ -48,35 +49,13 @@ console.log(ratio)
     )
   }
 
-  getContrastRatio = () => {
-    const textRGB = this.state.textColor.rgb
-    const bcgRGB = this.state.backgroundColor.rgb
+//   componentDidUpdate () {
+//     const ratio = this.getContrastRatio()
+// console.log(ratio)
+//     this.state.ratio = ratio
+//   }
 
-    if (textRGB === undefined || bcgRGB === undefined) {
-      return
-    }
-
-    // get luminance value
-    const getLuminance = color => {
-      const getSRGB = decColor => decColor / 255
-
-      const sRGBArr = color.map(col => getSRGB(col))
-      const [ R, G, B ] = sRGBArr.map(col => {
-        return (col <= 0.03928) ? col / 12.92 : Math.pow(((col + 0.055) / 1.055), 2.4)
-      })
-
-      return (0.2126 * R + 0.7152 * G + 0.0722 * B)
-    }
-
-    const l1 = getLuminance(textRGB)
-    const l2 = getLuminance(bcgRGB)
-
-    const ratio = Math.round((Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05) * 100) / 100
-
-    return ratio
-  }
-
-  render() {
+  render () {
     return (
       <div className="app">
         <header className="header">
@@ -87,9 +66,8 @@ console.log(ratio)
           <Color color={ this.state.textColor } onColorChange={ this.onColorChange } />
 
           <div className="main__ratio ratio">
-            { this.getContrastRatio() }
+            { getContrastRatio(this.state.backgroundColor.rgb, this.state.textColor.rgb) }
           </div>
-
           <Color color={ this.state.backgroundColor } onColorChange={ this.onColorChange }/>
         </main>
 
@@ -123,15 +101,15 @@ console.log(ratio)
               Accessibility:
             </p>
             <ul className="description__list">
-            <li className="description__listItem">
-              Level AA Large - ratio greater than 3 (for minimum 24px or 18.5px bold text)
-            </li>
-            <li className="description__listItem">
-              Level AA - ratio greater than 4.5 (for normal text sized below ~18px)
-            </li>
-            <li className="description__listItem">
-              Level AAA Large - ratio greater than 4.5 (for minimum 24px or 18.5px bold text)
-            </li>
+              <li className="description__listItem">
+                Level AA Large - ratio greater than 3 (for minimum 24px or 18.5px bold text)
+              </li>
+              <li className="description__listItem">
+                Level AA - ratio greater than 4.5 (for normal text sized below ~18px)
+              </li>
+              <li className="description__listItem">
+                Level AAA Large - ratio greater than 4.5 (for minimum 24px or 18.5px bold text)
+              </li>
               <li className="description__listItem">
                 Level AAA - ratio greater than 7 (for normal text sized below ~18px)
               </li>
