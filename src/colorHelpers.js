@@ -46,12 +46,8 @@ export function hslToRgb (h = 0, s = 0, l = 0) {
 }
 
 export function rgbToHex (rgb = [0, 0, 0]) {
+  const padZero = val => val.toString().length === 1 ? `0${ val }` : val
+  const decToHex = nr => nr.toString(16)
 
-  const decToHex = val => val < 16
-    ? `0${val.toString(16)}`
-    : val.toString(16)
-
-  const hexaColor = `#${ rgb.map(decToHex).join('') }`
-
-  return hexaColor
+  return `#${ rgb.map(decToHex).map(padZero).join('') }`
 }
