@@ -5,35 +5,51 @@
 }
 
 /* label + text input */
-.form__color .form{
+.form__color {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-  &__label{
-    text-transform: capitalize;
-    margin: 20px 10px;
-  }
+   & .form{
+     &__label{
+       text-transform: capitalize;
+       font-size: 15px;
+     }
 
-  &__input{
-    margin-left: 5px;
-    padding: 5px;
-    border-radius: 5px;
-    border: 0;
+     &__input{
+       padding: 5px;
+       border-radius: 5px;
+       border: 0;
+       margin: 10px;
+    }
   }
 }
-
 
 /* ranges */
 
-.form__item{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 10px;
-  width: 305px;
+.form__ranges {
+  & .form{
+
+    &__label{
+      width: 150px;
+    }
+
+    &__item{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 10px;
+      width: 30vw;
+    }
+  }
 }
+
 
 .input--range{
   cursor: pointer;
   height: 3px;
+  width: 20vw;
   background: #ddd;
   border-radius: 5px;
   border: 2px solid #010101;

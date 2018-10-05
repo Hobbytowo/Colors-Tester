@@ -94,24 +94,54 @@ class App extends Component {
         </main>
 
         <section className="section section--description">
-          <ul>
-            <li>Level AAA Large</li>
-            <li>Level AAA</li>
-            <li>Level AA Large</li>
-            <li>Level AA</li>
-          </ul>
-          <p>
-            The latest accessibility guidelines (e.g., WCAG 2.0 1.4.3) require that text (and images of text) provide adequate contrast for people who have visual impairments. Contrast is measured using a formula that gives a ratio ranging from 1:1 (no contrast, e.g., black text on a black background) to 21:1 (maximum contrast, e.g., black text on a white background).
-          </p>
-          <p>
-            Accessibility
-          </p>
-          <ul>
-            <li>Level AAA Large - ratio greater than 7</li>
-            <li>Level AAA - ratio greater than 4.5</li>
-            <li>Level AA Large - ratio greater than 4.5 (for normal sized text)</li>
-            <li>Level AA - ratio greater than 3 (for bold text or text larger than 24px)</li>
-          </ul>
+          <div className="description description--left">
+            <p className="description__par par par--title">
+              Passed:
+            </p>
+            <ul className="description__list">
+              <li className="description__listItem">AAA Large</li>
+              <li className="description__listItem">AAA</li>
+              <li className="description__listItem">AA Large</li>
+              <li className="description__listItem">AA</li>
+            </ul>
+            <span>
+              github icon
+            </span>
+          </div>
+
+          <div className="description description--right">
+            <p className="description__par par">
+              <a className="description__link" href="https://www.w3.org/TR/WCAG20/#visual-audio-contrast">
+              WCAG - Visual Contrast
+              </a>
+            </p>
+            <p className="description__par">
+              The latest accessibility guidelines (e.g., WCAG 2.0 1.4.3) require that text (and images of text) provide adequate contrast for people who have visual impairments. Contrast is measured using a formula that gives a ratio ranging from 1:1 (no contrast, e.g., black text on a black background) to 21:1 (maximum contrast, e.g., black text on a white background).
+            </p>
+            <p className="description__par">
+              Decorative elements or text that is part of a logo or brand name have no minimum contrast requirements.
+            </p>
+            <p className="description__par par par--title">
+              Accessibility:
+            </p>
+            <ul className="description__list">
+            <li className="description__listItem">
+              Level AA Large - ratio greater than 3 (for minimum 24px or 18.5px bold text)
+            </li>
+            <li className="description__listItem">
+              Level AA - ratio greater than 4.5 (for normal text sized below ~18px)
+            </li>
+            <li className="description__listItem">
+              Level AAA Large - ratio greater than 4.5 (for minimum 24px or 18.5px bold text)
+            </li>
+              <li className="description__listItem">
+                Level AAA - ratio greater than 7 (for normal text sized below ~18px)
+              </li>
+            </ul>
+            <p className="description__par par par--aaa">
+              Level AAA is for text which will be read for a significant period of time.
+            </p>
+          </div>
         </section>
       </div>
     );
