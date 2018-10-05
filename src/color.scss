@@ -5,17 +5,21 @@
 }
 
 /* label + text input */
-.form__color .form__label{
-  text-transform: capitalize;
-  margin: 20px 10px;
+.form__color .form{
+
+  &__label{
+    text-transform: capitalize;
+    margin: 20px 10px;
+  }
+
+  &__input{
+    margin-left: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 0;
+  }
 }
 
-.form__color .form__input{
-  margin-left: 5px;
-  padding: 5px;
-  border-radius: 5px;
-  border: 0;
-}
 
 /* ranges */
 

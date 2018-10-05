@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './color.css';
+import './color.scss';
 
 class Color extends Component {
   state = {
