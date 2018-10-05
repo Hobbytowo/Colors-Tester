@@ -1,43 +1,10 @@
 import React, { Component } from 'react';
 import './color.scss';
+import { hslToRgb, rgbToHex } from './colorHelpers'
 
 class Color extends Component {
   state = {
     hex: ''
-  }
-
-  // get rgb color from hsl
-  hslToRgb = (h, s, l) => {
-    h /= 360
-    let r, g, b = 0
-
-    if (s === 0) {
-      r = g = b = l // achromatic
-    } else {
-      const hue2rgb = (p, q, t) => {
-        t < 0 && (t += 1)
-        t > 1 && (t -= 1)
-
-        if (t < 1/6) return p + (q - p) * 6 * t
-        if (t < 1/2) return q
-        if (t < 2/3) return p + (q - p) * (2/3 - t) * 6
-        return p
-      }
-
-      const q = l < 0.5 ? l * (1 + s) : l + s - l * s
-      const p = 2 * l - q
-      r = hue2rgb(p, q, h + 1/3)
-      g = hue2rgb(p, q, h)
-      b = hue2rgb(p, q, h - 1/3)
-    }
-
-    return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)]
-  }
-
-  // get hexa color from rgb
-  rgbToHex = x => {
-    const hex = x.toString(16)
-    return hex.length === 1 ? '0' + hex : hex
   }
 
   // on color change event
@@ -46,17 +13,17 @@ class Color extends Component {
     const value = e.target.value * 1
 
     const { color: { hue, saturation, lightness }} = this.props
-    const [r, g, b] = this.hslToRgb(hue, saturation, lightness)
+    const rgb = hslToRgb(hue, saturation, lightness)
 
     this.setState({
-      hex: `#${ this.rgbToHex(r) }${ this.rgbToHex(g) }${ this.rgbToHex(b) }`
+      hex: rgbToHex(rgb)
     })
 
     this.props.onColorChange({
       name: name + 'Color',
       valueName: valueName,
       value: value,
-      rgb: [r, g, b]
+      rgb: rgb
       })
   }
 
@@ -65,17 +32,17 @@ class Color extends Component {
     super(props)
     const { color: { name, hue, saturation, lightness }} = props
 
-    const [ r, g, b ] = this.hslToRgb(hue, saturation, lightness)
+    const rgb = hslToRgb(hue, saturation, lightness)
 
     // get initial hexa values
-    this.state.hex = `#${ this.rgbToHex(r) }${ this.rgbToHex(g) }${ this.rgbToHex(b) }`
+    this.state.hex = rgbToHex(rgb)
 
     // send initial rgb value to App component
     this.props.onColorChange({
       name: name + 'Color',
       valueName: 'hue',
       value: hue,
-      rgb: [r, g, b]
+      rgb: rgb
     })
   }
 
