@@ -36,8 +36,8 @@ class App extends Component {
 
   updateStyle = (name, rgb) => {
     const body = document.querySelector('body')
-    //const ratio = document.querySelector('.ratio')
-
+    const ratio = document.querySelector('.ratio')
+console.log(ratio)
     const color = `rgb(${ rgb.join(',') })`
 
     name === 'textColor' ? (
@@ -95,24 +95,22 @@ class App extends Component {
 
         <section className="section section--description">
           <div className="description description--left">
-            <p className="description__par par par--title">
-              Passed:
-            </p>
             <ul className="description__list">
+              Passed:
               <li className="description__listItem">AAA Large</li>
               <li className="description__listItem">AAA</li>
               <li className="description__listItem">AA Large</li>
               <li className="description__listItem">AA</li>
             </ul>
-            <span>
-              github icon
-            </span>
+            <a className="description__icon" href="https://github.com/Hobbytowo/Colors-Tester">
+              <span className="fab fa-github"></span>
+            </a>
           </div>
 
           <div className="description description--right">
             <p className="description__par par">
               <a className="description__link" href="https://www.w3.org/TR/WCAG20/#visual-audio-contrast">
-              WCAG - Visual Contrast
+                WCAG - Visual Contrast
               </a>
             </p>
             <p className="description__par">
