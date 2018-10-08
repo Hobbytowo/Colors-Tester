@@ -50,16 +50,27 @@ class App extends Component {
 
   updateStyle = (name, rgb) => {
     const body = document.querySelector('body')
-//    const ratio = document.querySelector('.ratio')
-//    console.log(ratio !== null)
+    const ratio = document.querySelector('.ratio')
+    const btns = document.querySelectorAll('.button')
+    const link = document.querySelector('.description__link')
+
     const color = rgbToHex(rgb)
 
-    name === 'textColor' ? (
+    if (name === 'textColor') {
+      // when text color was changed
       body.style.color = color
-    ) : (
+      link.style.color = color
+      ratio.style.background = color
+      btns.forEach(btn => {
+        btn.style.background = color
+      })
+    } else { // when background color was changed
       body.style.background = color
-    //  ratio !== null && ( ratio.style.color = color)
-    )
+      ratio.style.color = color
+      btns.forEach(btn => {
+        btn.style.color = color
+      })
+    }
   }
 
   // swap background color and text color onClick event
@@ -237,7 +248,7 @@ class App extends Component {
                 Level AAA - ratio greater than 7 (for normal text sized below ~18px)
               </li>
             </ul>
-            <p className="description__par par par--aaa">
+            <p className="description__par par par--aboutAAA">
               Level AAA is for text which will be read for a significant period of time.
             </p>
           </div>
