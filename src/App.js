@@ -7,15 +7,15 @@ class App extends Component {
   state = {
     textColor: {
       name: 'text',
-      hue: 116,
-      saturation: 0.44,
+      hue: 201,
+      saturation: 0.72,
       lightness: 0.16
     },
     backgroundColor: {
       name: 'background',
-      hue: 35,
-      saturation: 0.86,
-      lightness: 0.55
+      hue: 222,
+      saturation: 0.1,
+      lightness: 0.76
     }
   }
 
