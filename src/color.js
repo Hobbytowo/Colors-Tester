@@ -7,9 +7,9 @@ class Color extends Component {
     hex: ''
   }
 
-  /* swap hexa values in text inputs
-  on swap background color and text color onClick event */
-  onSwap = props => {
+  /* update hexa values in text inputs
+  on reverse or random onClick event */
+  updateHexaValues = props => {
     const rgb = props
 
     this.setState({

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.scss';
 import Color from './color'
-import { rgbToHex, getContrastRatio } from './colorHelpers'
+import { hslToRgb, rgbToHex, getContrastRatio } from './colorHelpers'
 
 class App extends Component {
   state = {
@@ -89,8 +89,65 @@ class App extends Component {
         this.updateStyle('backgroundColor', this.state.backgroundColor.rgb)
 
         // swap hexa values in text inputs
-        this.textColorChild.current.onSwap(this.state.textColor.rgb)
-        this.backgroundColorChild.current.onSwap(this.state.backgroundColor.rgb)
+        this.textColorChild.current.updateHexaValues(this.state.textColor.rgb)
+        this.backgroundColorChild.current.updateHexaValues(this.state.backgroundColor.rgb)
+      }
+    )
+  }
+
+  getRandomColors = () => {
+    // get random h, s, l values
+    this.setState(prevState => ({
+      textColor: {
+        ...prevState.textColor,
+        hue: Math.round(Math.random() * 360),
+        saturation: Math.round(Math.random() * 100) / 100,
+        lightness: Math.round(Math.random() * 100) / 100
+      },
+      backgroundColor: {
+        ...prevState.backgroundColor,
+        hue: Math.round(Math.random() * 360),
+        saturation: Math.round(Math.random() * 100) / 100,
+        lightness: Math.round(Math.random() * 100) / 100
+      }
+    }),
+      () => {
+        // get rgb values after the state changes above occurs
+        const textRGB = hslToRgb(
+          this.state.textColor.hue,
+          this.state.textColor.saturation,
+          this.state.textColor.lightness
+        )
+
+        const bcgRGB = hslToRgb(
+          this.state.backgroundColor.hue,
+          this.state.backgroundColor.saturation,
+          this.state.backgroundColor.lightness
+        )
+
+        this.setState(prevState => ({
+          textColor: {
+            ...prevState.textColor,
+            rgb: textRGB
+          },
+          backgroundColor: {
+            ...prevState.backgroundColor,
+            rgb: bcgRGB
+          }
+        }))
+
+        // change background and text style color
+        this.updateStyle('textColor', textRGB)
+        this.updateStyle('backgroundColor', bcgRGB)
+
+        // update hexa values in text inputs
+        this.textColorChild.current.updateHexaValues(textRGB)
+        this.backgroundColorChild.current.updateHexaValues(bcgRGB)
+
+        // update ratio value
+        this.setState({
+          ratio: getContrastRatio(bcgRGB, textRGB)
+        })
       }
     )
   }
@@ -146,6 +203,9 @@ class App extends Component {
             <div className="description__buttons">
               <button onClick={ this.swapColors } className="button button--swap">
                 Reverse colors
+              </button>
+              <button onClick={ this.getRandomColors } className="button button--random">
+                Random colors
               </button>
             </div>
 
