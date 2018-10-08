@@ -7,12 +7,22 @@ class Color extends Component {
     hex: ''
   }
 
+  /* swap hexa values in text inputs
+  on swap background color and text color onClick event */
+  onSwap = props => {
+    const rgb = props
+
+    this.setState({
+      hex: rgbToHex(rgb)
+    })
+  }
+
   // on color change event
   onColorChange = e => {
     const [ valueName, name ] = e.target.name.split('-')
     const value = e.target.value * 1
 
-    const { color: { hue, saturation, lightness }} = this.props
+    const { hue, saturation, lightness } = this.props.color
     const rgb = hslToRgb(hue, saturation, lightness)
 
     this.setState({
@@ -21,16 +31,16 @@ class Color extends Component {
 
     this.props.onColorChange({
       name: name + 'Color',
-      valueName: valueName,
-      value: value,
+      changedValueName: valueName,
+      changedValue: value,
       rgb: rgb
-      })
+    })
   }
 
   // get initial values
-  constructor(props) {
+  constructor (props) {
     super(props)
-    const { color: { name, hue, saturation, lightness }} = props
+    const { name, hue, saturation, lightness } = props.color
 
     const rgb = hslToRgb(hue, saturation, lightness)
 
@@ -40,14 +50,14 @@ class Color extends Component {
     // send initial rgb value to App component
     this.props.onColorChange({
       name: name + 'Color',
-      valueName: 'hue',
-      value: hue,
+      changedValueName: 'hue',
+      changedValue: hue,
       rgb: rgb
     })
   }
 
-  render() {
-    const { color: { name, hue, saturation, lightness }} = this.props
+  render () {
+    const { name, hue, saturation, lightness } = this.props.color
 
     return (
       <article className={`main__article article article--${ name }`}>

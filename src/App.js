@@ -19,15 +19,22 @@ class App extends Component {
     }
   }
 
-  // on change range event (and constructor - init rgb value)
-  // data from Color component
+  // create references to Color components
+  constructor (props) {
+    super(props)
+    this.textColorChild = React.createRef()
+    this.backgroundColorChild = React.createRef()
+  }
+
+  /* on change range event (and constructor - init rgb value)
+  data from Color component */
   onColorChange = color => {
-    const { name, valueName, value, rgb } = color
+    const { name, changedValueName, changedValue, rgb } = color
 
     this.setState(prevState => ({
       [name]: {
           ...prevState[name],
-          [valueName]: value,
+          [changedValueName]: changedValue,
           rgb
         }
     }),
@@ -55,6 +62,39 @@ class App extends Component {
     )
   }
 
+  // swap background color and text color onClick event
+  swapColors = () => {
+    // swap h, s, l values
+    this.setState(prevState => ({
+      textColor: {
+        ...prevState.textColor,
+        hue: this.state.backgroundColor.hue,
+        saturation: this.state.backgroundColor.saturation,
+        lightness: this.state.backgroundColor.lightness,
+        rgb: this.state.backgroundColor.rgb
+      },
+      backgroundColor: {
+        ...prevState.backgroundColor,
+        hue: this.state.textColor.hue,
+        saturation: this.state.textColor.saturation,
+        lightness: this.state.textColor.lightness,
+        rgb: this.state.textColor.rgb
+      }
+    }),
+      () => {
+        // execute after the state changes occurs
+
+        // change background and text style color
+        this.updateStyle('textColor', this.state.textColor.rgb)
+        this.updateStyle('backgroundColor', this.state.backgroundColor.rgb)
+
+        // swap hexa values in text inputs
+        this.textColorChild.current.onSwap(this.state.textColor.rgb)
+        this.backgroundColorChild.current.onSwap(this.state.backgroundColor.rgb)
+      }
+    )
+  }
+
   render () {
     return (
       <div className="app">
@@ -63,12 +103,20 @@ class App extends Component {
         </header>
 
         <main className="main">
-          <Color color={ this.state.textColor } onColorChange={ this.onColorChange } />
+          <Color
+            color={ this.state.textColor }
+            onColorChange={ this.onColorChange }
+            ref={ this.textColorChild }
+          />
 
           <div className="main__ratio ratio">
             { this.state.ratio }
           </div>
-          <Color color={ this.state.backgroundColor } onColorChange={ this.onColorChange }/>
+          <Color
+            color={ this.state.backgroundColor }
+            onColorChange={ this.onColorChange }
+            ref={ this.backgroundColorChild }
+          />
         </main>
 
         <section className="section section--description">
@@ -95,6 +143,12 @@ class App extends Component {
           </div>
 
           <div className="description description--right">
+            <div className="description__buttons">
+              <button onClick={ this.swapColors } className="button button--swap">
+                Reverse colors
+              </button>
+            </div>
+
             <p className="description__par par">
               <a className="description__link" href="https://www.w3.org/TR/WCAG20/#visual-audio-contrast">
                 WCAG - Visual Contrast
