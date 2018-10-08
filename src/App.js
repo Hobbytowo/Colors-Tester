@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.scss';
 import Color from './color'
-import { getContrastRatio } from './colorHelpers'
+import { rgbToHex, getContrastRatio } from './colorHelpers'
 
 class App extends Component {
   state = {
@@ -30,16 +30,22 @@ class App extends Component {
           [valueName]: value,
           rgb
         }
-    }))
-
-    this.updateStyle(name, rgb)
+    }),
+      () => {
+        // execute this functions after the state changes occurs
+        this.updateStyle(name, rgb)
+        this.setState({
+          ratio: getContrastRatio(this.state.backgroundColor.rgb, this.state.textColor.rgb)
+        })
+      }
+    )
   }
 
   updateStyle = (name, rgb) => {
     const body = document.querySelector('body')
-    const ratio = document.querySelector('.ratio')
-    console.log(ratio !== null)
-    const color = `rgb(${ rgb.join(',') })`
+//    const ratio = document.querySelector('.ratio')
+//    console.log(ratio !== null)
+    const color = rgbToHex(rgb)
 
     name === 'textColor' ? (
       body.style.color = color
@@ -48,12 +54,6 @@ class App extends Component {
     //  ratio !== null && ( ratio.style.color = color)
     )
   }
-
-//   componentDidUpdate () {
-//     const ratio = this.getContrastRatio()
-// console.log(ratio)
-//     this.state.ratio = ratio
-//   }
 
   render () {
     return (
@@ -66,19 +66,28 @@ class App extends Component {
           <Color color={ this.state.textColor } onColorChange={ this.onColorChange } />
 
           <div className="main__ratio ratio">
-            { getContrastRatio(this.state.backgroundColor.rgb, this.state.textColor.rgb) }
+            { this.state.ratio }
           </div>
           <Color color={ this.state.backgroundColor } onColorChange={ this.onColorChange }/>
         </main>
 
         <section className="section section--description">
           <div className="description description--left">
+            {/* conditional rendering depend on ratio value */}
             <ul className="description__list">
-              Passed:
-              <li className="description__listItem">AAA Large</li>
-              <li className="description__listItem">AAA</li>
-              <li className="description__listItem">AA Large</li>
-              <li className="description__listItem">AA</li>
+              { this.state.ratio > 3 ? 'Passed:' : 'Failed!' }
+              { this.state.ratio > 3 &&
+                <li className="description__listItem">AAA Large</li>
+              }
+              { this.state.ratio > 4.5 &&
+                <li className="description__listItem">AAA</li>
+              }
+              { this.state.ratio > 4.5 &&
+                <li className="description__listItem">AA Large</li>
+              }
+              { this.state.ratio > 7 &&
+                <li className="description__listItem">AA</li>
+              }
             </ul>
             <a className="description__icon" href="https://github.com/Hobbytowo/Colors-Tester">
               <span className="fab fa-github"></span>
