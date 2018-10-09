@@ -37,7 +37,7 @@ $thumb-shadow-color: #111;
 // track variables
 
 $track-color: rgba(220, 220, 220, 0.4);
-$track-width: 90%;
+$track-width: 100%;
 $track-height: 8px;
 $track-shadow-size: 2px;
 $track-shadow-blur: 2px;
@@ -75,7 +75,7 @@ $track-radius: 5px;
   & .form{
 
     &__label{
-      width: 150px;
+      width: 180px;
     }
 
     &__item{
