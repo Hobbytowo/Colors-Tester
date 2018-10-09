@@ -20,30 +20,76 @@ class App extends Component {
   }
 
   // create references to Color components
+  // get initial values
   constructor (props) {
     super(props)
     this.textColorChild = React.createRef()
     this.backgroundColorChild = React.createRef()
+
+    const rgbText = this.getRGB('textColor')
+    const rgbBcg = this.getRGB('backgroundColor')
+    this.state.textColor.rgb = rgbText
+    this.state.backgroundColor.rgb = rgbBcg
+
+    // initial ratio value
+    this.state.ratio = getContrastRatio(rgbText, rgbBcg)
+  }
+
+  componentDidMount () {
+    const rgbText = this.state.textColor.rgb
+    const rgbBcg = this.state.backgroundColor.rgb
+
+    // initial backround and text style
+    this.updateStyle('textColor', rgbText)
+    this.updateStyle('backgroundColor', rgbBcg)
+
+    // // initial hexa colorPicker value
+    this.textColorChild.current.updateHexaValues(rgbText)
+    this.backgroundColorChild.current.updateHexaValues(rgbBcg)
+  }
+
+  getRGB = name => {
+    const { hue, saturation, lightness } = this.state[name]
+    return hslToRgb(hue, saturation, lightness)
   }
 
   /* on change range event (and constructor - init rgb value)
   data from Color component */
   onColorChange = color => {
-    const { name, changedValueName, changedValue, rgb } = color
+    const { name, changedValueName, changedValue } = color
 
     this.setState(prevState => ({
       [name]: {
           ...prevState[name],
-          [changedValueName]: changedValue,
-          rgb
+          [changedValueName]: changedValue
         }
     }),
       () => {
         // execute this functions after the state changes occurs
+
+        // get rgb value and update background and text color style
+        const rgb = this.getRGB(name)
         this.updateStyle(name, rgb)
-        this.setState({
-          ratio: getContrastRatio(this.state.backgroundColor.rgb, this.state.textColor.rgb)
-        })
+
+        // get ratio value and update hexa colorPicker value
+        let rgb2 = 0
+
+        if ( name === 'textColor') { // if textColor was changed
+          rgb2 = this.state.backgroundColor.rgb
+          this.textColorChild.current.updateHexaValues(rgb)
+        } else { // if backgroundColor was changed
+          rgb2 = this.state.textColor.rgb
+          this.backgroundColorChild.current.updateHexaValues(rgb)
+        }
+
+        const ratio = getContrastRatio(rgb, rgb2)
+        this.setState(prevState => ({
+          ratio,
+          [name]: {
+              ...prevState[name],
+              rgb
+            }
+        }))
       }
     )
   }
@@ -185,6 +231,8 @@ class App extends Component {
       }
     )
   }
+
+
   render () {
     return (
       <div className="app">

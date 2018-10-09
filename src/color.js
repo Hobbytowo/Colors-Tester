@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './color.scss';
-import { hslToRgb, rgbToHex } from './colorHelpers'
+import { rgbToHex } from './colorHelpers'
 import ColorPicker from './colorPicker'
 
 class Color extends Component {
@@ -23,20 +23,11 @@ class Color extends Component {
     const [ valueName, name ] = e.target.name.split('-')
     const value = e.target.value * 1
 
-    const { hue, saturation, lightness } = this.props.color
-    const rgb = hslToRgb(hue, saturation, lightness)
-
-    // update hex color to dynamic change colorPicker background
-    this.setState({
-      hex: rgbToHex(rgb)
-    })
-
     // set chaged values to main component
     this.props.onColorChange({
       name: name + 'Color',
       changedValueName: valueName,
-      changedValue: value,
-      rgb: rgb
+      changedValue: value
     })
   }
 
@@ -57,24 +48,6 @@ class Color extends Component {
     })
   }
 
-  // get initial values
-  constructor (props) {
-    super(props)
-    const { name, hue, saturation, lightness } = props.color
-
-    const rgb = hslToRgb(hue, saturation, lightness)
-
-    // get initial hexa values
-    this.state.hex = rgbToHex(rgb)
-
-    // send initial rgb value to App component
-    this.props.onColorChange({
-      name: name + 'Color',
-      changedValueName: 'hue',
-      changedValue: hue,
-      rgb: rgb
-    })
-  }
 
   render () {
     const { name, hue, saturation, lightness } = this.props.color
