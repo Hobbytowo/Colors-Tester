@@ -47,7 +47,7 @@ class App extends Component {
     this.updateStyle('textColor', rgbText)
     this.updateStyle('backgroundColor', rgbBcg)
 
-    // // initial hexa colorPicker value
+    // initial hexa colorPicker value
     this.textColorChild.current.updateHexaValues(rgbText)
     this.backgroundColorChild.current.updateHexaValues(rgbBcg)
   }

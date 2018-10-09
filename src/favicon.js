@@ -4,7 +4,6 @@ const canvas = document.createElement('canvas')
 const ctx = canvas.getContext('2d')
 const faviconLink = document.querySelector('link[rel="shortcut icon"]')
 canvas.width = canvas.height = 16
-document.body.appendChild(canvas)
 
 export function getFavicon (rgb1, rgb2) {
   ctx.clearRect(0, 0, 16, 16)
