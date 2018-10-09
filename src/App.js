@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import './App.scss';
+import React, { Component } from 'react'
+import './App.scss'
 import Color from './color'
 import { hslToRgb, rgbToHex, getContrastRatio } from './colorHelpers'
 
@@ -99,7 +99,7 @@ class App extends Component {
         this.updateStyle('textColor', this.state.textColor.rgb)
         this.updateStyle('backgroundColor', this.state.backgroundColor.rgb)
 
-        // swap hexa values in text inputs
+        // swap hexa values for colorPickers
         this.textColorChild.current.updateHexaValues(this.state.textColor.rgb)
         this.backgroundColorChild.current.updateHexaValues(this.state.backgroundColor.rgb)
       }
@@ -151,13 +151,36 @@ class App extends Component {
         this.updateStyle('textColor', textRGB)
         this.updateStyle('backgroundColor', bcgRGB)
 
-        // update hexa values in text inputs
+        // update hexa values for colorPickers
         this.textColorChild.current.updateHexaValues(textRGB)
         this.backgroundColorChild.current.updateHexaValues(bcgRGB)
 
         // update ratio value
         this.setState({
           ratio: getContrastRatio(bcgRGB, textRGB)
+        })
+      }
+    )
+  }
+
+  onColorPickerChange = color => {
+    const { name, hsl, rgb } = color
+    const [ hue, saturation, lightness ] = hsl
+
+    this.setState(prevState => ({
+      [name]: {
+          ...prevState[name],
+          hue: Math.round(hue),
+          saturation: Math.round(saturation * 100) / 100,
+          lightness: Math.round(lightness * 100) / 100,
+          rgb
+        }
+    }),
+      () => {
+        // execute after the state changes occurs
+        this.updateStyle(name, rgb)
+        this.setState({
+          ratio: getContrastRatio(this.state.backgroundColor.rgb, this.state.textColor.rgb)
         })
       }
     )
@@ -174,15 +197,18 @@ class App extends Component {
           <Color
             color={ this.state.textColor }
             onColorChange={ this.onColorChange }
+            onColorPickerChange={ this.onColorPickerChange }
             ref={ this.textColorChild }
           />
 
           <div className="main__ratio ratio">
             { this.state.ratio }
           </div>
+
           <Color
             color={ this.state.backgroundColor }
             onColorChange={ this.onColorChange }
+            onColorPickerChange={ this.onColorPickerChange }
             ref={ this.backgroundColorChild }
           />
         </main>

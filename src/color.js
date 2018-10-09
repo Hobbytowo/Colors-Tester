@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import './color.scss';
 import { hslToRgb, rgbToHex } from './colorHelpers'
+import ColorPicker from './colorPicker'
 
 class Color extends Component {
   state = {
     hex: ''
   }
 
-  /* update hexa values in text inputs
+  /* update hexa values in colorPicker
   on reverse or random onClick event */
   updateHexaValues = props => {
     const rgb = props
@@ -17,7 +18,7 @@ class Color extends Component {
     })
   }
 
-  // on color change event
+  // on color in the HSL range change
   onColorChange = e => {
     const [ valueName, name ] = e.target.name.split('-')
     const value = e.target.value * 1
@@ -25,15 +26,34 @@ class Color extends Component {
     const { hue, saturation, lightness } = this.props.color
     const rgb = hslToRgb(hue, saturation, lightness)
 
+    // update hex color to dynamic change colorPicker background
     this.setState({
       hex: rgbToHex(rgb)
     })
 
+    // set chaged values to main component
     this.props.onColorChange({
       name: name + 'Color',
       changedValueName: valueName,
       changedValue: value,
       rgb: rgb
+    })
+  }
+
+  // on color in the colorPicker change
+  onColorPickerChange = color => {
+    const { name, hex, hsl: { h, s, l }, rgb: { r, g, b } } = color
+
+    // update hex color to dynamic change colorPicker background
+    this.setState({
+      hex
+    })
+
+    // set values to main component
+    this.props.onColorPickerChange({
+      name: name + 'Color',
+      rgb: [ r, g, b ],
+      hsl: [ h, s, l]
     })
   }
 
@@ -63,14 +83,14 @@ class Color extends Component {
       <article className={`main__article article article--${ name }`}>
         <form className="article__form form">
           <div className="form__color">
-            <label className="form__label" htmlFor={ `${ name }Color` }>
-              { name } color:
+            <label className="form__label">
+              { name } color
             </label>
-            <input
-              className="form__input"
-              id={ `${ name }Color` }
-              type="text"
-              placeholder={ this.state.hex }/>
+            <ColorPicker
+              hex={ this.state.hex }
+              name={ name }
+              onColorPickerChange={ this.onColorPickerChange }
+            />
           </div>
           <div className="form__ranges">
             <div className="form__item">

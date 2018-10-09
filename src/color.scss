@@ -4,24 +4,17 @@
   align-items: stretch;
 }
 
-/* label + text input */
+/* main label + <colorPicker> */
 .form__color {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 
-   & .form{
-     &__label{
-       text-transform: capitalize;
-       font-size: 15px;
-     }
-
-     &__input{
-       padding: 5px;
-       border-radius: 5px;
-       border: 0;
-       margin: 10px;
+  & .form {
+   &__label {
+     text-transform: capitalize;
+     font-size: 15px;
+     margin-right: 10px;
     }
   }
 }
