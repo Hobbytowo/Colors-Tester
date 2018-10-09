@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './App.scss'
 import Color from './color'
 import { hslToRgb, rgbToHex, getContrastRatio } from './colorHelpers'
+import { getFavicon } from './favicon'
 
 class App extends Component {
   state = {
@@ -33,6 +34,9 @@ class App extends Component {
 
     // initial ratio value
     this.state.ratio = getContrastRatio(rgbText, rgbBcg)
+
+    // initial FAVICON
+    getFavicon(rgbText, rgbBcg)
   }
 
   componentDidMount () {
@@ -77,9 +81,11 @@ class App extends Component {
         if ( name === 'textColor') { // if textColor was changed
           rgb2 = this.state.backgroundColor.rgb
           this.textColorChild.current.updateHexaValues(rgb)
+          getFavicon(rgb, rgb2)
         } else { // if backgroundColor was changed
           rgb2 = this.state.textColor.rgb
           this.backgroundColorChild.current.updateHexaValues(rgb)
+          getFavicon(rgb2, rgb)
         }
 
         const ratio = getContrastRatio(rgb, rgb2)
@@ -141,6 +147,9 @@ class App extends Component {
       () => {
         // execute after the state changes occurs
 
+        // update favicon
+        getFavicon(this.state.textColor.rgb, this.state.backgroundColor.rgb)
+
         // change background and text style color
         this.updateStyle('textColor', this.state.textColor.rgb)
         this.updateStyle('backgroundColor', this.state.backgroundColor.rgb)
@@ -201,6 +210,9 @@ class App extends Component {
         this.textColorChild.current.updateHexaValues(textRGB)
         this.backgroundColorChild.current.updateHexaValues(bcgRGB)
 
+        // update favicon
+        getFavicon(textRGB, bcgRGB)
+
         // update ratio value
         this.setState({
           ratio: getContrastRatio(bcgRGB, textRGB)
@@ -224,6 +236,7 @@ class App extends Component {
     }),
       () => {
         // execute after the state changes occurs
+        getFavicon(this.state.textColor.rgb, this.state.backgroundColor.rgb)
         this.updateStyle(name, rgb)
         this.setState({
           ratio: getContrastRatio(this.state.backgroundColor.rgb, this.state.textColor.rgb)
