@@ -36,6 +36,7 @@ npm run build
 - Data from [w3.org - "Relative luminance"](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef)
 - Icons from [Font Awesome](https://fontawesome.com/icons?d=gallery)
 - Font from [Google Fonts](https://fonts.google.com/)
+- ColorPicker from [React Color](https://casesandberg.github.io/react-color/)
 
 ## Inspiration
 - [Colorable ](https://colorable.jxnblk.com/)
