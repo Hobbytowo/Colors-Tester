@@ -310,7 +310,7 @@ class App extends Component {
               </button>
             </div>
 
-            <p className="description__par par par--link">
+            <p className="description__par par par--title">
               <a className="description__link" href="https://www.w3.org/TR/WCAG20/#visual-audio-contrast">
                 WCAG - Visual Contrast
               </a>

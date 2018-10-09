@@ -70,25 +70,14 @@
     max-width: 1000px;
     margin-left: 10vw;
 
-    & .par{
-      margin: 30px;
-      text-align: center;
-    }
-
     & .par--title{
       text-align: center;
-      font-weight: 700;
-    }
-
-    & .par--link{
-      padding-top: 5rem;
+      font-weight: 600;
+      margin-top: 50px;
     }
 
     & .description__list{
-      padding: 5px;
-      text-align: center;
-      list-style-type: circle;
-      list-style-position: inside;
+      padding-left: 15px;
     }
 
     & .description__listItem{
@@ -97,6 +86,8 @@
 
     & .par--aboutAAA{
       margin-top: 0;
+      text-align: left;
+      padding-left: 15px;
     }
   }
 
