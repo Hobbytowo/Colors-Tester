@@ -19,6 +19,7 @@
   }
 }
 
+
 /* ranges */
 
 // thumb variables
@@ -36,7 +37,7 @@ $thumb-shadow-color: #111;
 // track variables
 
 $track-color: rgba(220, 220, 220, 0.4);
-$track-width: 20vw;
+$track-width: 90%;
 $track-height: 8px;
 $track-shadow-size: 2px;
 $track-shadow-blur: 2px;
@@ -54,7 +55,7 @@ $track-radius: 5px;
 }
 
 @mixin track() {
-  width: $track-width;
+  max-width: $track-width;
   height: $track-height;
 }
 
@@ -82,7 +83,7 @@ $track-radius: 5px;
       align-items: center;
       justify-content: space-between;
       margin: 10px;
-      width: 30vw;
+      width: 35vw;
     }
   }
 }
@@ -160,5 +161,69 @@ $track-radius: 5px;
 
   &:focus::-ms-fill-upper {
     background: $track-color;
+  }
+}
+
+
+@media (max-width: 1084px){
+  .form__ranges {
+
+    & .form{
+      &__item{
+        position: relative;
+        margin: 25px 0;
+        width: 38vw;
+      }
+
+      &__label{
+        position: absolute;
+        left: 10px;
+        bottom: 25px;
+        will-change: transform;
+        -moz-transform: translate3d(0, -5px, 0);
+        font-size: 13px;
+      }
+    }
+  }
+}
+
+@media (max-width: 815px){
+  .form__ranges {
+
+    & .form{
+      &__item{
+        margin: 15px 0;
+        width: 90vw;
+      }
+
+      &__label{
+        position: relative;
+        font-size: 16px;
+        bottom: 0;
+        will-change: transform;
+        -moz-transform: translate3d(0, 0, 0);
+      }
+    }
+  }
+}
+
+@media (max-width: 465px){
+  .form__ranges {
+
+    & .input--range{
+      margin: 14px 0;
+    }
+
+    & .form{
+
+      &__label{
+        position: absolute;
+        left: 10px;
+        bottom: 32px;
+        will-change: transform;
+        -moz-transform: translate3d(0, -5px, 0);
+        font-size: 13px;
+      }
+    }
   }
 }
