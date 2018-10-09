@@ -185,7 +185,6 @@ class App extends Component {
       }
     )
   }
-
   render () {
     return (
       <div className="app">
@@ -213,30 +212,34 @@ class App extends Component {
           />
         </main>
 
-        <section className="section section--description">
-          <div className="description description--left">
-            {/* conditional rendering depend on ratio value */}
-            <ul className="description__list">
-              { this.state.ratio > 3 ? 'Passed:' : 'Failed!' }
-              { this.state.ratio > 3 &&
-                <li className="description__listItem">AAA Large</li>
-              }
-              { this.state.ratio > 4.5 &&
-                <li className="description__listItem">AAA</li>
-              }
-              { this.state.ratio > 4.5 &&
-                <li className="description__listItem">AA Large</li>
-              }
-              { this.state.ratio > 7 &&
-                <li className="description__listItem">AA</li>
-              }
-            </ul>
+        <section className="section section--description description">
+          <div className="description--left">
+            <div className="description__passedList">
+              {/* conditional rendering depend on ratio value */}
+              <span className="list__title">
+              { this.state.ratio > 3 ? 'Passed:' : 'Failed' }
+              </span>
+              <ul className="description__list list">
+                { this.state.ratio > 3 &&
+                  <li className="description__listItem">AAA Large</li>
+                }
+                { this.state.ratio > 4.5 &&
+                  <li className="description__listItem">AAA</li>
+                }
+                { this.state.ratio > 4.5 &&
+                  <li className="description__listItem">AA Large</li>
+                }
+                { this.state.ratio > 7 &&
+                  <li className="description__listItem">AA</li>
+                }
+              </ul>
+            </div>
             <a className="description__icon" href="https://github.com/Hobbytowo/Colors-Tester">
               <span className="fab fa-github"></span>
             </a>
           </div>
 
-          <div className="description description--right">
+          <div className="description--right">
             <div className="description__buttons">
               <button onClick={ this.swapColors } className="button button--swap">
                 Reverse colors
@@ -246,7 +249,7 @@ class App extends Component {
               </button>
             </div>
 
-            <p className="description__par par">
+            <p className="description__par par par--link">
               <a className="description__link" href="https://www.w3.org/TR/WCAG20/#visual-audio-contrast">
                 WCAG - Visual Contrast
               </a>

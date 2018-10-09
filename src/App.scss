@@ -44,31 +44,31 @@
 
 // description
 
-.section {
-  margin: 20px;
-  display: flex;
-}
-
 .description {
-  padding: 20px 70px;
+  padding: 20px 0 20px 70px;
+  margin: 20px;
+  margin-top: 30px;
+  display: flex;
 
   &--left {
     font-size: 30px;
     min-width: 300px;
+    margin-left: 5vw;
 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 
-    & .description__listItem:first-child{
-      margin-top: 15px;
+    & .list__title{
+      font-weight: 600;
     }
   }
 
   &--right {
-    margin-top: 30px;
     text-align: justify;
     padding: 10px 100px;
+    max-width: 1000px;
+    margin-left: 10vw;
 
     & .par{
       margin: 30px;
@@ -78,6 +78,10 @@
     & .par--title{
       text-align: center;
       font-weight: 700;
+    }
+
+    & .par--link{
+      padding-top: 5rem;
     }
 
     & .description__list{
@@ -98,13 +102,70 @@
 
   &__link{
     font-weight: 600;
-    margin: 30px;
 
     transition: 0.2s all;
     will-change: text-decoration;
 
     &:hover{
       text-decoration: overline;
+    }
+  }
+}
+
+
+@media (max-width: 1200px){
+  .description{
+    &--right{
+      margin-left: 0;
+    }
+  }
+}
+
+
+@media (max-width: 1020px){
+  .description{
+    padding: 10px;
+    flex-direction: column;
+
+    &--left {
+      min-width: 0px;
+      padding: 10px;
+
+      & .description__listItem{
+        display: inline-flex;
+        margin: 0 1.5rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 740px){
+  .description{
+    padding: 10px 5px;
+
+    &--left {
+      padding: 10px 5px;
+
+      & .description__listItem{
+        font-size: 1.5rem;
+      }
+    }
+
+    &--right{
+      padding: 10px 5vw;
+
+      & .par--link{
+        padding-top: 2rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 630px){
+  .description--left {
+
+    & .description__listItem{
+      display: list-item;
     }
   }
 }
@@ -134,12 +195,21 @@
 }
 
 
+@media (max-width: 740px){
+  .description__buttons{
+    flex-direction: column;
+    align-items: center;
+
+    & .button{
+      margin: 15px 0;
+    }
+  }
+}
+
 // github
 
 .description__icon{
   display: block;
-  text-align: center;
-  width: 80px;
 }
 
 .fab{
@@ -151,5 +221,17 @@
 
   &:hover{
     color: #222;
+  }
+}
+
+@media (max-width: 630px){
+  .description__icon{
+    text-align: right;
+  }
+
+  .fab {
+    font-size: 4rem;
+    padding: 20px;
+    margin-right: 0;
   }
 }

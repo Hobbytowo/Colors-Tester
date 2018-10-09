@@ -188,6 +188,10 @@ $track-radius: 5px;
 }
 
 @media (max-width: 815px){
+  .article{
+    margin-top: 40px;
+  }
+
   .form__ranges {
 
     & .form{
