@@ -42,4 +42,4 @@ npm run build
 - [Colorable ](https://colorable.jxnblk.com/)
 
 ## License
-- MIT © [Weronika Kędziora ](https://github.com/Hobbytowo)
+- MIT © [Weronika Topolska ](https://github.com/Hobbytowo)
